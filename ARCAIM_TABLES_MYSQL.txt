@@ -1,0 +1,44 @@
+CREATE TABLE ARCW_users(
+id INT NOT NULL PRIMARY KEY,
+login VARCHAR(25) NOT NULL,
+language_usera VARCHAR(10) NOT NULL,
+email_user VARCHAR(255) NOT NULL,
+Telegram VARCHAR(255) NOT NULL,
+Verifikation_user BOOL NOT NULL,
+CONSTRAINT unique_ARCW_users_login UNIQUE( login ) 
+);
+
+CREATE TABLE arcw_word_list(
+id INT NOT NULL PRIMARY KEY,
+language_lernen VARCHAR(255) NOT NULL,
+language_translate VARCHAR(255) NOT NULL,
+name VARCHAR(255) NOT NULL,
+public_list BOOLEAN NOT NULL,
+user_id INT NOT NULL,
+FOREIGN KEY (user_id) REFERENCES ARCW_users (id) ON DELETE CASCADE
+);
+
+CREATE TABLE arcw_word(
+id INT NOT NULL PRIMARY KEY,
+word VARCHAR(255) NOT NULL,
+word_translate VARCHAR(255) NOT NULL,
+list_id INT NOT NULL, 
+FOREIGN KEY (list_id) REFERENCES arcw_word_list (id) ON DELETE CASCADE
+);
+
+CREATE TABLE arcw_statistik(
+id INT NOT NULL PRIMARY KEY,
+word_id INT NOT NULL,
+true_answer INT NOT NULL, 
+false_answer INT NOT NULL,
+FOREIGN KEY (word_id) REFERENCES arcw_word (id) ON DELETE CASCADE
+);
+
+
+CREATE TABLE VERIFIC_users(
+id INT NOT NULL PRIMARY KEY,
+date_AP DATE NOT NULL,
+status_AP VARCHAR(255) NOT NULL,
+user_id INT NOT NULL,
+FOREIGN KEY (user_id) REFERENCES ARCW_users (id) ON DELETE CASCADE
+);
